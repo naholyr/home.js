@@ -1,5 +1,6 @@
 var express = require('express');
-
+var feedparser = require('feedparser');
+var async = require('async');
 
 // Load Swig template engine
 var cons = require('consolidate');
@@ -19,7 +20,22 @@ swig.init({
     allowErrors: true // allows errors to be thrown and caught by express instead of suppressed
 });
 
+
+
+
 app.get('/', function (req, res) {
+	function displayTitle (article) {
+	  var arttitle = JSON.stringify(article.title)
+	  console.log('Got title: %s', arttitle);
+	}
+	async.parallel ([
+		function() { feedparser.parseUrl('http://archives.steinmetz.fr/journal/feeds/all.atom.xml').on('article', displayTitle) },
+		function() { feedparser.parseUrl('http://nsteinmetz.tumblr.com/rss').on('article', displayTitle) },
+		function() { feedparser.parseUrl('http://archives.steinmetz.fr/tutoriels/feeds/all.atom.xml').on('article', displayTitle) },
+		function() { feedparser.parseUrl('http://api.twitter.com/1/statuses/user_timeline.rss?screen_name=nsteinmetz').on('article', displayTitle)  },
+	], function(err, results) {
+		console.log(err);
+	});
     res.render('index.html', { foo: 'bar' });
 });
 

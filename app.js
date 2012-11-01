@@ -34,9 +34,9 @@ app.get('/', function (req, res) {
 		function() { feedparser.parseUrl('http://archives.steinmetz.fr/tutoriels/feeds/all.atom.xml').on('article', displayTitle) },
 		function() { feedparser.parseUrl('http://api.twitter.com/1/statuses/user_timeline.rss?screen_name=nsteinmetz').on('article', displayTitle)  },
 	], function(err, results) {
-		console.log(err);
+                var content =  []; // calculate from results
+		res.render('index', { foo: 'bar',  content: content });
 	});
-    res.render('index.html', { foo: 'bar' });
 });
 
 app.listen(8000);

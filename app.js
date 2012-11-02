@@ -30,10 +30,9 @@ app.get('/', function (req, res) {
 	}
 	async.parallel ([
 		function(cb) { feedparser.parseUrl('http://archives.steinmetz.fr/journal/feeds/all.atom.xml', displayTitle); cb(null, feeds)},
-		/*function() { feedparser.parseUrl('http://nsteinmetz.tumblr.com/rss').on('article', displayTitle) },
+		function() { feedparser.parseUrl('http://nsteinmetz.tumblr.com/rss').on('article', displayTitle) },
 		function() { feedparser.parseUrl('http://archives.steinmetz.fr/tutoriels/feeds/all.atom.xml').on('article', displayTitle) },
 		function() { feedparser.parseUrl('http://api.twitter.com/1/statuses/user_timeline.rss?screen_name=nsteinmetz').on('article', displayTitle)  },
-    */
 	], function(err, results) {
 		res.render('index', {
                   foo: 'bar',

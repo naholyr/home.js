@@ -2,5 +2,7 @@
 
 {% block content %}
 {{ foo }}
-{% for feed in feeds %} ... {% endfor %}
+<ul>
+{% for feed in feeds %} <li>{{ feed }}</li> {% endfor %}
+</ul>
 {% endblock %}
